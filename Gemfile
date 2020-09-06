@@ -21,6 +21,7 @@ gem 'jquery-rails'
 
 group :development, :test do
   gem 'pry'
+  gem 'factory_bot_rails'
 end
 
 group :test do
