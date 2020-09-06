@@ -18,5 +18,5 @@
 
 .byebug_history
 .generators
-.idea
+.idea/*
 .rakeTasks
