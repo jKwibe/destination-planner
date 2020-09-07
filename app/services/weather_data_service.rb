@@ -1,10 +1,7 @@
-class WeatherService
+class WeatherDataService
   def self.weather_info(zipcode, units = 'imperial')
     JSON.parse(get_weather(zipcode, units).body, symbolize_names: true)
   end
-
-  private
-
 
   def self.get_weather(zipcode, units)
     conn.get('weather') do |f|
