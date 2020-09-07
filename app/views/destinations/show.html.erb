@@ -1,5 +1,6 @@
 <div class="container">
   <p id="notice"><%= notice %></p>
+  <iframe src=<%= @destination_weather.embed_giphy_url %> width="480" height="276" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
 
   <h3>
     <%= @destination.name %>
@@ -19,14 +20,14 @@
 
   <div class="row">
     <h4>Forecast for <%= @destination.name %>: </h4>
-    <h5>The weather will be <%= @weather.detailed_description %> </h5>
+    <h5>The weather will be <%= @destination_weather.detailed_description %> </h5>
     <h5>Temperature</h5>
     <ul>
-      <li>High: <%= @weather.max_temp %> </li>
-      <li>Low: <%= @weather.min_temp %></li>
+      <li>High: <%= @destination_weather.max_temp %> </li>
+      <li>Low: <%= @destination_weather.min_temp %></li>
     </ul>
   </div>
-  <p> <%= @weather.date %></p>
+  <p> <%= @destination_weather.date %></p>
   <div class="row">
     <%= link_to 'Edit', edit_destination_path(@destination) %> |
     <%= link_to 'Back', destinations_path %>

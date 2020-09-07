@@ -1,20 +1,19 @@
 class DestinationsController < ApplicationController
-  before_action :set_destination, only: [:show, :edit, :update, :destroy]
+  before_action :set_destination, only: %i[show edit update destroy]
 
   def index
     @destinations = Destination.all
   end
 
   def show
-    @weather = Weather.new(WeatherService.weather_info(@destination.zip))
+    @destination_weather = DestinationFacade.new(Weather.new(WeatherDataService.weather_info(@destination.zip)))
   end
 
   def new
     @destination = Destination.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @destination = Destination.new(destination_params)
@@ -39,6 +38,7 @@ class DestinationsController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_destination
     @destination = Destination.find(params[:id])
