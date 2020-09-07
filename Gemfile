@@ -32,6 +32,7 @@ group :test do
   gem 'launchy'
   gem 'faker'
   gem 'simplecov'
+  gem 'webmock', '~> 3.8', '>= 3.8.3'
 end
 
 group :development do
