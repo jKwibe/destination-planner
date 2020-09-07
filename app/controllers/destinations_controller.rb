@@ -6,19 +6,7 @@ class DestinationsController < ApplicationController
   end
 
   def show
-    conn = Faraday.new('https://api.openweathermap.org/data/2.5/') do |f|
-      f.params[:appid] = ENV['WEATHER_API']
-    end
-
-    #TODO make response dynamic
-    response = conn.get('weather') do |f|
-      f.params[:zip] = '80205,us'
-      f.params[:units] = 'imperial'
-    end
-
-    data = JSON.parse(response.body, symbolize_names: true)
-    #TODO make a weather poro
-    @weather = Weather.new(data)
+    @weather = Weather.new(WeatherService.weather_info(@destination.zip))
   end
 
   def new
