@@ -1,12 +1,16 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Shows All Destinations', type: :feature do
   before(:each) do
-    @destination1 = create(:destination)
+    @destination1 = create(:destination, zip: '80205')
     @destination2 = create(:destination)
+
+    @data = File.read('spec/data/weather_data.json')
+    stub_request(:get, "https://api.openweathermap.org/data/2.5/weather?appid=#{ENV['WEATHER_API']}&units=imperial&zip=#{@destination1.zip},us").to_return(status: 200, body: @data)
   end
   it 'should ' do
-    #create destination
     visit '/'
     within "#destination-#{@destination1.id}" do
       click_link 'Show'
@@ -21,17 +25,15 @@ RSpec.describe 'Shows All Destinations', type: :feature do
   end
 
   it 'have forecast' do
+    weather = Weather.new(JSON.parse(@data, symbolize_names: true))
+    date = 'Sunday, September 1'
+    allow_any_instance_of(Weather).to receive(:date).and_return(date)
+
     visit destination_path(@destination1)
     expect(page).to have_content('Temperature')
-    expect(page).to have_content('High')
-    expect(page).to have_content('Low')
+    expect(page).to have_content("High: #{weather.max_temp}")
+    expect(page).to have_content("Low: #{weather.min_temp}")
+    expect(page).to have_content(weather.detailed_description)
+    expect(page).to have_content(date)
   end
 end
-
-# As a user
-# When I visit "/"
-# And I click on a destination
-# Then I should be on page "/destinations/:id"
-# Then I should see the destination's name, zipcode, description, and current weather
-# The weather forecast is specific to the destination whose page I'm on
-# The forecast should include date (weekday, month and day), current, high and low temps in Fahrenheit, and a summary (for example "light rain", "clear sky", etc.)
