@@ -11,4 +11,8 @@ class Weather
     @detailed_description = data[:weather][0][:description]
     @main_description = data[:weather][0][:main]
   end
+
+  def date
+    Date.today.strftime('%A, %B %d')
+  end
 end
