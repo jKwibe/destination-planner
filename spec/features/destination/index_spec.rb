@@ -8,8 +8,11 @@ RSpec.describe 'Shows All Destinations', type: :feature do
     @destination2 = create(:destination)
 
     @data = File.read('spec/data/weather_data.json')
+    @giphy_data = File.read('spec/data/giphy_data.json')
     stub_request(:get, "https://api.openweathermap.org/data/2.5/weather?appid=#{ENV['WEATHER_API']}&units=imperial&zip=#{@destination1.zip},us").to_return(status: 200, body: @data)
-  end
+    stub_request(:get, "https://api.giphy.com/v1/stickers/search?api_key=re12emMamNIBklzNNYoP2wB0vrBWZEcB&lang=en&limit=1&offset=0&q=few%20clouds&rating=g").to_return(status: 200, body: @giphy_data)
+
+        end
   it 'should ' do
     visit '/'
     within "#destination-#{@destination1.id}" do
