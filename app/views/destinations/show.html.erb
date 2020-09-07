@@ -19,13 +19,14 @@
 
   <div class="row">
     <h4>Forecast for <%= @destination.name %>: </h4>
+    <h5>The weather will be <%= @weather.detailed_description %> </h5>
     <h5>Temperature</h5>
     <ul>
-      <li>High: </li>
-      <li>Low: </li>
+      <li>High: <%= @weather.max_temp %> </li>
+      <li>Low: <%= @weather.min_temp %></li>
     </ul>
   </div>
-
+  <p> <%= @weather.date %></p>
   <div class="row">
     <%= link_to 'Edit', edit_destination_path(@destination) %> |
     <%= link_to 'Back', destinations_path %>
